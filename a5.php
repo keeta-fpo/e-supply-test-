@@ -12,8 +12,11 @@
         let response = await fetch("data.json");
         let data = await response.json();
 
-        echo data;
+        console.log(data);
     }
+    loadJson();
+
 </script>
+
 </body>
 </html>

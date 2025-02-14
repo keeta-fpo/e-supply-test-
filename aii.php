@@ -39,6 +39,22 @@
                 console.error(error);
             }            
         }
+
+
+        // function downf(){
+        //     let fileName = document.getElementById("drop").value;
+        //     if(!fileName){
+        //         alert("select")
+        //         return;
+        //     }
+        
+        // let link =document.createElement("a");
+        // link.href = "download_file.php?file= " + encodeURIComponent(fileName);
+        // link.download = fileName;
+        // document.body.appendChild(link);
+        // link.click();
+        // document.body.removeChild(link);
+        // }
     </script>
 
 </head>
@@ -46,11 +62,16 @@
 <body>
     <h2>Select Download</h2>
 
+
     
     <select id ="drop">
         <option value="">select file </option>
     </select>
-    
+
+
+
+    <!-- <button onclick="downf()"> Download </button> -->
+
     <script>
                document.addEventListener("DOMContentLoaded", loadfiles);
 

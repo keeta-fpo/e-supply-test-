@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script> src= https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js</script>
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
           async function loadsection() {
+         
+         
             try{
                 let response = await fetch("fetch_file.php");
 
@@ -48,8 +50,11 @@
                 let response = await fetch(url);
                 let data = await response.json();
 
-                console.log(data.success); 
-                
+
+                console.log("load",data.success); 
+                // console.log("ee");
+
+
                 if (data.success){
                     userData = data.user;
                     let tableBody = document.querySelector("#reportTable tbody");
@@ -69,19 +74,62 @@
                 console.error("error fetch",error);
             }
         }
+
+        async function DownL(format) {
+            // alert ("sss", format);
+            console.log("downloadtype", format);
+
+            let filterValue = document.getElementById('drop').value;                                              
+            let url =`fetch_report.php?filter=${encodeURIComponent(filterValue)}`;
+
+            console.log("send URL",url);
+
+            // try{
+                let response = await fetch(url);
+                let data = await response.json();
+
+                // console.log(data);
+
+
+                 if(data.success){
+                    let users = data.user;
+
+                    console.log(format);
+
+                          if (format === 'excel'){
+                        
+                        // console.log("excel");
+                    
+                        let  wb = XLSX.utils.book_new();
+                        let  ws = XLSX.utils.json_to_sheet(users);
+                        XLSX.utils.book_append_sheet(wb,ws,"report");
+                        XLSX.writeFile(wb,"reprot.xlsx");
+
+                            } else{
+                        console.log("csv");
+                        } 
+
+                 }
+                }
+    
+            // }
+        
+        
         </script>
+
+
 </head>
 <body>
-        <h1>select</h1>
 
+        <h1>select</h1>
     <select id ="drop">
-        <option value="">select file </option>
+        <option value="">พัสดุทั้งหมด</option>
     </select>
 
      <button onclick = "loadR()">load Data</button>
-     <button onclick = "DownR('csv')">csv</button>
-     <button onclick = "DownR('json')">json</button>
-     <button onclick = "DownR('excel')">excel</button>  
+     <button onclick = "DownL('csv')">csv</button>
+     <!-- <button onclick = "DownLJ('json')">json</button> -->
+     <button onclick = "DownL('excel')">excel</button>  
  
      <table id="reportTable">
          <thead>
